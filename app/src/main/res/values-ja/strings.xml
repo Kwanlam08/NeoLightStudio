@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">NeoLightStudio</string>
+    <string name="app_title">LIGHT STICK</string>
+    <string name="app_subtitle">ライトスティックコンソール</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ホーム</string>
+    <string name="nav_create">作成</string>
+    <string name="nav_settings">設定</string>
+
+    <!-- Status messages -->
+    <string name="status_ready">準備完了</string>
+    <string name="status_scanning">近くのライトスティックを検索中…</string>
+    <string name="status_scan_failed">スキャン失敗：%1$d</string>
+    <string name="status_connecting">接続中…</string>
+    <string name="status_connected_preparing">接続済み、ライト制御を準備中…</string>
+    <string name="status_disconnected">切断されました</string>
+    <string name="status_ready_control">ライト制御の準備が完了しました</string>
+    <string name="status_updated">ライトを更新しました</string>
+    <string name="status_write_failed">書き込み失敗：%1$d</string>
+    <string name="status_syncing">色と明るさを同期中…</string>
+    <string name="status_gradient_stopped">グラデーションを停止しました</string>
+    <string name="status_gradient_playing">グラデーションレインボーを再生中</string>
+    <string name="status_rainbow_playing">退場レインボーを再生中…</string>
+    <string name="status_mic_failed">マイクを起動できません</string>
+    <string name="status_music_on">音楽連動オン</string>
+    <string name="status_music_off">音楽連動オフ</string>
+    <string name="status_no_channel">利用可能な制御チャンネルがありません</string>
+    <string name="status_write_error">書き込みを開始できません</string>
+
+    <!-- Device -->
+    <string name="unnamed_device">名前なし BLE デバイス</string>
+    <string name="scan_button">ライトスティックをスキャン</string>
+    <string name="scan_hint">デバイスリストは発見順に固定され、信号強度で並び替わりません。</string>
+    <string name="connect_button">このライトスティックに接続</string>
+
+    <!-- Connection -->
+    <string name="connected_label">接続済み</string>
+    <string name="nct_v2_label">NCT V2 · プライベートローカル制御</string>
+
+    <!-- Exit rainbow -->
+    <string name="exit_rainbow_title">退場レインボー</string>
+    <string name="exit_rainbow_desc">ライトスティック内蔵のリアルな下部リング点滅エフェクトです。速度はデバイスのデフォルト設定のままです。</string>
+    <string name="exit_rainbow_button">✨ 退場レインボーを再生</string>
+
+    <!-- Create screen -->
+    <string name="please_connect_first">まずホームタブでライトスティックを接続してください。</string>
+    <string name="gradient_title">全灯グラデーション</string>
+    <string name="gradient_desc">左側が速く、右側が遅くなります。これは独立したグラデーションエフェクトで、退場レインボーではありません。</string>
+    <string name="cycle_seconds">1周約 %1$d 秒</string>
+    <string name="stop_gradient">グラデーションを停止</string>
+    <string name="play_gradient">グラデーションを再生</string>
+
+    <!-- Music reactive -->
+    <string name="music_title">音楽連動</string>
+    <string name="music_desc">スマートフォンのマイクで周囲の音楽を検知し、リアルタイムで明るさを調整します。</string>
+    <string name="music_on">オン</string>
+    <string name="music_off">オフ</string>
+
+    <!-- Color & brightness -->
+    <string name="color_brightness_title">色と明るさ</string>
+    <string name="brightness_label">明るさ %1$d%%</string>
+    <string name="hue_label">色相</string>
+    <string name="color_red">赤</string>
+    <string name="color_yellow">黄</string>
+    <string name="color_cyan">シアン</string>
+    <string name="color_purple">紫</string>
+
+    <!-- Settings -->
+    <string name="appearance_title">外観</string>
+    <string name="theme_follow_system">システムに従う</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="about_title">について</string>
+    <string name="about_app_name">NeoLightStudio</string>
+    <string name="about_desc">プライベートローカル BLE ライトスティックコントローラー</string>
+    <string name="about_warning">所有するデバイスのみを制御してください。</string>
+</resources>

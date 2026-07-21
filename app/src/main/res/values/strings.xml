@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">NeoLightStudio</string>
+    <string name="app_title">LIGHT STICK</string>
+    <string name="app_subtitle">Light Stick Console</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_create">Create</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Status messages -->
+    <string name="status_ready">Ready</string>
+    <string name="status_scanning">Searching for nearby light sticks…</string>
+    <string name="status_scan_failed">Scan failed: %1$d</string>
+    <string name="status_connecting">Connecting…</string>
+    <string name="status_connected_preparing">Connected, preparing light control…</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="status_ready_control">Light control ready</string>
+    <string name="status_updated">Light updated</string>
+    <string name="status_write_failed">Write failed: %1$d</string>
+    <string name="status_syncing">Syncing color and brightness…</string>
+    <string name="status_gradient_stopped">Gradient stopped</string>
+    <string name="status_gradient_playing">Playing gradient rainbow</string>
+    <string name="status_rainbow_playing">Playing exit rainbow…</string>
+    <string name="status_mic_failed">Cannot start microphone</string>
+    <string name="status_music_on">Music reactive on</string>
+    <string name="status_music_off">Music reactive off</string>
+    <string name="status_no_channel">No available control channel</string>
+    <string name="status_write_error">Cannot start write</string>
+
+    <!-- Device -->
+    <string name="unnamed_device">Unnamed BLE device</string>
+    <string name="scan_button">Scan for light sticks</string>
+    <string name="scan_hint">Device list stays in discovery order, no signal-based reordering.</string>
+    <string name="connect_button">Connect this light stick</string>
+
+    <!-- Connection -->
+    <string name="connected_label">Connected</string>
+    <string name="nct_v2_label">NCT V2 · Private local control</string>
+
+    <!-- Exit rainbow -->
+    <string name="exit_rainbow_title">Exit Rainbow</string>
+    <string name="exit_rainbow_desc">Authentic built-in bottom-ring flashing effect. Speed stays at device default.</string>
+    <string name="exit_rainbow_button">✨ Play Exit Rainbow</string>
+
+    <!-- Create screen -->
+    <string name="please_connect_first">Please connect a light stick on the Home tab first.</string>
+    <string name="gradient_title">Full-Ring Gradient</string>
+    <string name="gradient_desc">Slower on the right, faster on the left. This is an independent gradient effect, not the exit rainbow.</string>
+    <string name="cycle_seconds">Approx. %1$d sec per loop</string>
+    <string name="stop_gradient">Stop Gradient</string>
+    <string name="play_gradient">Play Gradient</string>
+
+    <!-- Music reactive -->
+    <string name="music_title">Music Reactive</string>
+    <string name="music_desc">Uses the phone microphone to sense surrounding music and adjust brightness in real time.</string>
+    <string name="music_on">On</string>
+    <string name="music_off">Off</string>
+
+    <!-- Color & brightness -->
+    <string name="color_brightness_title">Color &amp; Brightness</string>
+    <string name="brightness_label">Brightness %1$d%%</string>
+    <string name="hue_label">Hue</string>
+    <string name="color_red">Red</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_purple">Purple</string>
+
+    <!-- Settings -->
+    <string name="appearance_title">Appearance</string>
+    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="about_title">About</string>
+    <string name="about_app_name">NeoLightStudio</string>
+    <string name="about_desc">Private local BLE light stick controller</string>
+    <string name="about_warning">Only control devices you own.</string>
+</resources>

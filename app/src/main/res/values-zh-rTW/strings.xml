@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">NeoLightStudio</string>
+    <string name="app_title">LIGHT STICK</string>
+    <string name="app_subtitle">應援棒控制台</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">首頁</string>
+    <string name="nav_create">創作</string>
+    <string name="nav_settings">設定</string>
+
+    <!-- Status messages -->
+    <string name="status_ready">準備就緒</string>
+    <string name="status_scanning">正在尋找附近的應援棒…</string>
+    <string name="status_scan_failed">掃描失敗：%1$d</string>
+    <string name="status_connecting">正在連線…</string>
+    <string name="status_connected_preparing">已連線，正在準備燈光控制…</string>
+    <string name="status_disconnected">連線已斷開</string>
+    <string name="status_ready_control">燈光控制已就緒</string>
+    <string name="status_updated">燈光已更新</string>
+    <string name="status_write_failed">寫入失敗：%1$d</string>
+    <string name="status_syncing">正在同步顏色與亮度…</string>
+    <string name="status_gradient_stopped">全燈漸變已停止</string>
+    <string name="status_gradient_playing">正在播放全燈漸變彩虹</string>
+    <string name="status_rainbow_playing">正在播放散場彩虹…</string>
+    <string name="status_mic_failed">無法啟動麥克風</string>
+    <string name="status_music_on">音樂律動已開啟</string>
+    <string name="status_music_off">音樂律動已停止</string>
+    <string name="status_no_channel">未找到可用的控制通道</string>
+    <string name="status_write_error">無法開始寫入</string>
+
+    <!-- Device -->
+    <string name="unnamed_device">未命名 BLE 裝置</string>
+    <string name="scan_button">掃描我的應援棒</string>
+    <string name="scan_hint">裝置列表按發現順序固定，不會隨訊號變化跳動。</string>
+    <string name="connect_button">連接這支應援棒</string>
+
+    <!-- Connection -->
+    <string name="connected_label">已連線</string>
+    <string name="nct_v2_label">NCT V2 · 私人本地控制</string>
+
+    <!-- Exit rainbow -->
+    <string name="exit_rainbow_title">散場彩虹</string>
+    <string name="exit_rainbow_desc">這是應援棒內部真實底圈閃動效果，速度保持裝置原始設定。</string>
+    <string name="exit_rainbow_button">✨ 播放散場彩虹</string>
+
+    <!-- Create screen -->
+    <string name="please_connect_first">請先在首頁連接應援棒</string>
+    <string name="gradient_title">全燈漸變彩虹</string>
+    <string name="gradient_desc">左邊更快，右邊更慢；這是獨立的全燈漸變效果，不是散場彩虹。</string>
+    <string name="cycle_seconds">一圈約 %1$d 秒</string>
+    <string name="stop_gradient">停止全燈漸變</string>
+    <string name="play_gradient">播放全燈漸變</string>
+
+    <!-- Music reactive -->
+    <string name="music_title">音樂律動</string>
+    <string name="music_desc">用手機麥克風感應周圍音樂，即時改變應援棒亮度。</string>
+    <string name="music_on">已開啟</string>
+    <string name="music_off">已關閉</string>
+
+    <!-- Color & brightness -->
+    <string name="color_brightness_title">顏色與亮度</string>
+    <string name="brightness_label">亮度 %1$d%%</string>
+    <string name="hue_label">色相</string>
+    <string name="color_red">紅</string>
+    <string name="color_yellow">黃</string>
+    <string name="color_cyan">青</string>
+    <string name="color_purple">紫</string>
+
+    <!-- Settings -->
+    <string name="appearance_title">外觀</string>
+    <string name="theme_follow_system">跟隨系統</string>
+    <string name="theme_light">淺色</string>
+    <string name="theme_dark">深色</string>
+    <string name="about_title">關於</string>
+    <string name="about_app_name">NeoLightStudio</string>
+    <string name="about_desc">私人本地 BLE 應援棒控制器</string>
+    <string name="about_warning">僅控制你自己擁有的裝置。</string>
+</resources>

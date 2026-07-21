@@ -1,0 +1,13 @@
+.gradle/
+.kotlin/
+build/
+**/build/
+local.properties
+*.iml
+.idea/
+analysis/
+xolite-hci-capture.zip
+AGENT_HANDOFF.md
+*.apk
+*.keystore
+*.jks

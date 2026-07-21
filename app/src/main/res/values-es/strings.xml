@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">NeoLightStudio</string>
+    <string name="app_title">LIGHT STICK</string>
+    <string name="app_subtitle">Consola de Light Stick</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_create">Crear</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Status messages -->
+    <string name="status_ready">Listo</string>
+    <string name="status_scanning">Buscando light sticks cercanos…</string>
+    <string name="status_scan_failed">Escaneo fallido: %1$d</string>
+    <string name="status_connecting">Conectando…</string>
+    <string name="status_connected_preparing">Conectado, preparando control de luz…</string>
+    <string name="status_disconnected">Desconectado</string>
+    <string name="status_ready_control">Control de luz listo</string>
+    <string name="status_updated">Luz actualizada</string>
+    <string name="status_write_failed">Escritura fallida: %1$d</string>
+    <string name="status_syncing">Sincronizando color y brillo…</string>
+    <string name="status_gradient_stopped">Gradiente detenido</string>
+    <string name="status_gradient_playing">Reproduciendo gradiente arcoíris</string>
+    <string name="status_rainbow_playing">Reproduciendo arcoíris de salida…</string>
+    <string name="status_mic_failed">No se puede iniciar el micrófono</string>
+    <string name="status_music_on">Reactivación musical activada</string>
+    <string name="status_music_off">Reactivación musical desactivada</string>
+    <string name="status_no_channel">No hay canal de control disponible</string>
+    <string name="status_write_error">No se puede iniciar la escritura</string>
+
+    <!-- Device -->
+    <string name="unnamed_device">Dispositivo BLE sin nombre</string>
+    <string name="scan_button">Buscar light sticks</string>
+    <string name="scan_hint">La lista de dispositivos se mantiene en orden de descubrimiento, sin reordenar por señal.</string>
+    <string name="connect_button">Conectar este light stick</string>
+
+    <!-- Connection -->
+    <string name="connected_label">Conectado</string>
+    <string name="nct_v2_label">NCT V2 · Control local privado</string>
+
+    <!-- Exit rainbow -->
+    <string name="exit_rainbow_title">Arcoíris de Salida</string>
+    <string name="exit_rainbow_desc">Efecto auténtico de destello del anillo inferior integrado. La velocidad se mantiene en el valor predeterminado del dispositivo.</string>
+    <string name="exit_rainbow_button">✨ Reproducir Arcoíris de Salida</string>
+
+    <!-- Create screen -->
+    <string name="please_connect_first">Conecta un light stick en la pestaña Inicio primero.</string>
+    <string name="gradient_title">Gradiente de Anillo Completo</string>
+    <string name="gradient_desc">Más lento a la derecha, más rápido a la izquierda. Es un efecto de gradiente independiente, no el arcoíris de salida.</string>
+    <string name="cycle_seconds">Aprox. %1$d seg por ciclo</string>
+    <string name="stop_gradient">Detener Gradiente</string>
+    <string name="play_gradient">Reproducir Gradiente</string>
+
+    <!-- Music reactive -->
+    <string name="music_title">Reactivación Musical</string>
+    <string name="music_desc">Usa el micrófono del teléfono para detectar la música circundante y ajustar el brillo en tiempo real.</string>
+    <string name="music_on">Activado</string>
+    <string name="music_off">Desactivado</string>
+
+    <!-- Color & brightness -->
+    <string name="color_brightness_title">Color y Brillo</string>
+    <string name="brightness_label">Brillo %1$d%%</string>
+    <string name="hue_label">Tono</string>
+    <string name="color_red">Rojo</string>
+    <string name="color_yellow">Amarillo</string>
+    <string name="color_cyan">Cian</string>
+    <string name="color_purple">Púrpura</string>
+
+    <!-- Settings -->
+    <string name="appearance_title">Apariencia</string>
+    <string name="theme_follow_system">Seguir sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="about_title">Acerca de</string>
+    <string name="about_app_name">NeoLightStudio</string>
+    <string name="about_desc">Controlador local privado BLE de light stick</string>
+    <string name="about_warning">Solo controla dispositivos que te pertenezcan.</string>
+</resources>
