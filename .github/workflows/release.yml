@@ -27,6 +27,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Decode keystore
+        run: |
+          base64 -d neolightstudio.keystore.b64 > neolightstudio.keystore
+          ls -la neolightstudio.keystore
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
@@ -76,7 +81,7 @@ jobs:
             私人本地 BLE 应援棒控制 App。
 
             ### 下载
-            - **app-release.apk**: 已签名的 release APK（如果可用），否则为 debug APK
+            - **neolightstudio-release.apk**: 已签名的 release APK，可直接安装
 
             ### 主要功能
             - 三页面底部导航（首页 / 创作 / 设置）

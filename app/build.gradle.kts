@@ -16,6 +16,30 @@ android {
         versionName = "0.1.0"
     }
 
+    signingConfigs {
+        create("release") {
+            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "neolightstudio.keystore"
+            val keystorePass = System.getenv("KEYSTORE_PASSWORD") ?: "neolight2026"
+            val keyAlias = System.getenv("KEY_ALIAS") ?: "neolightstudio"
+            val keyPass = System.getenv("KEY_PASSWORD") ?: "neolight2026"
+            storeFile = file(keystorePath)
+            storePassword = keystorePass
+            this.keyAlias = keyAlias
+            keyPassword = keyPass
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+        }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
