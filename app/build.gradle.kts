@@ -18,7 +18,7 @@ android {
 
     signingConfigs {
         create("release") {
-            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "neolightstudio.keystore"
+            val keystorePath = System.getenv("KEYSTORE_PATH") ?: rootProject.file("neolightstudio.keystore").absolutePath
             val keystorePass = System.getenv("KEYSTORE_PASSWORD") ?: "neolight2026"
             val keyAlias = System.getenv("KEY_ALIAS") ?: "neolightstudio"
             val keyPass = System.getenv("KEY_PASSWORD") ?: "neolight2026"
