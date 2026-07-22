@@ -1,0 +1,2 @@
+*.b64 text eol=lf
+*.keystore.b64 binary
