@@ -19,19 +19,19 @@
     <string name="status_updated">ライトを更新しました</string>
     <string name="status_write_failed">書き込み失敗：%1$d</string>
     <string name="status_syncing">色と明るさを同期中…</string>
-    <string name="status_gradient_stopped">グラデーションを停止しました</string>
-    <string name="status_gradient_playing">グラデーションレインボーを再生中</string>
     <string name="status_rainbow_playing">退場レインボーを再生中…</string>
     <string name="status_mic_failed">マイクを起動できません</string>
     <string name="status_music_on">音楽連動オン</string>
     <string name="status_music_off">音楽連動オフ</string>
     <string name="status_no_channel">利用可能な制御チャンネルがありません</string>
     <string name="status_write_error">書き込みを開始できません</string>
+    <string name="status_flash_on">点滅エフェクトオン</string>
+    <string name="status_flash_off">点滅エフェクトオフ</string>
 
     <!-- Device -->
     <string name="unnamed_device">名前なし BLE デバイス</string>
     <string name="scan_button">ライトスティックをスキャン</string>
-    <string name="scan_hint">デバイスリストは発見順に固定され、信号強度で並び替わりません。</string>
+    <string name="scan_hint">デバイスリストは発見順に固定され、信号強度で並み替わりません。</string>
     <string name="connect_button">このライトスティックに接続</string>
 
     <!-- Connection -->
@@ -40,16 +40,21 @@
 
     <!-- Exit rainbow -->
     <string name="exit_rainbow_title">退場レインボー</string>
-    <string name="exit_rainbow_desc">ライトスティック内蔵のリアルな下部リング点滅エフェクトです。速度はデバイスのデフォルト設定のままです。</string>
+    <string name="exit_rainbow_desc_fixed">ライトスティック内蔵のリアルな下部リング点滅エフェクトです。速度はデバイスのファームウェアで決まり、アプリから調整できません。</string>
     <string name="exit_rainbow_button">✨ 退場レインボーを再生</string>
 
     <!-- Create screen -->
     <string name="please_connect_first">まずホームタブでライトスティックを接続してください。</string>
-    <string name="gradient_title">全灯グラデーション</string>
-    <string name="gradient_desc">左側が速く、右側が遅くなります。これは独立したグラデーションエフェクトで、退場レインボーではありません。</string>
-    <string name="cycle_seconds">1周約 %1$d 秒</string>
-    <string name="stop_gradient">グラデーションを停止</string>
-    <string name="play_gradient">グラデーションを再生</string>
+
+    <!-- Flash effects -->
+    <string name="flash_title">点滅エフェクト</string>
+    <string name="flash_desc">点滅モードを選択し、速度を調整します。これらのエフェクトはアプリで制御され、デバイス内蔵ではありません。</string>
+    <string name="flash_speed_label">間隔：%1$d ms</string>
+    <string name="flash_strobe">ストロボ</string>
+    <string name="flash_breathe">ブリージ</string>
+    <string name="flash_random">ランダム</string>
+    <string name="flash_rainbow">レインボー</string>
+    <string name="flash_stop">点滅を停止</string>
 
     <!-- Music reactive -->
     <string name="music_title">音楽連動</string>

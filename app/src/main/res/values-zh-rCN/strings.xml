@@ -19,14 +19,14 @@
     <string name="status_updated">灯光已更新</string>
     <string name="status_write_failed">写入失败：%1$d</string>
     <string name="status_syncing">正在同步颜色与亮度…</string>
-    <string name="status_gradient_stopped">全灯渐变已停止</string>
-    <string name="status_gradient_playing">正在播放全灯渐变彩虹</string>
     <string name="status_rainbow_playing">正在播放散场彩虹…</string>
     <string name="status_mic_failed">无法启动麦克风</string>
     <string name="status_music_on">音乐律动已开启</string>
     <string name="status_music_off">音乐律动已停止</string>
     <string name="status_no_channel">未找到可用的控制通道</string>
     <string name="status_write_error">无法开始写入</string>
+    <string name="status_flash_on">闪烁效果已开启</string>
+    <string name="status_flash_off">闪烁效果已停止</string>
 
     <!-- Device -->
     <string name="unnamed_device">未命名 BLE 设备</string>
@@ -40,16 +40,21 @@
 
     <!-- Exit rainbow -->
     <string name="exit_rainbow_title">散场彩虹</string>
-    <string name="exit_rainbow_desc">这是应援棒内部真实底圈闪动效果，速度保持设备原始设定。</string>
+    <string name="exit_rainbow_desc_fixed">这是应援棒内部真实底圈闪动效果，速度由设备固件决定，App 无法调节。</string>
     <string name="exit_rainbow_button">✨ 播放散场彩虹</string>
 
     <!-- Create screen -->
     <string name="please_connect_first">请先在首页连接应援棒</string>
-    <string name="gradient_title">全灯渐变彩虹</string>
-    <string name="gradient_desc">左边更快，右边更慢；这是独立的全灯渐变效果，不是散场彩虹。</string>
-    <string name="cycle_seconds">一圈约 %1$d 秒</string>
-    <string name="stop_gradient">停止全灯渐变</string>
-    <string name="play_gradient">播放全灯渐变</string>
+
+    <!-- Flash effects -->
+    <string name="flash_title">闪烁效果</string>
+    <string name="flash_desc">选择闪烁模式并调节速度，这些效果由 App 控制，不是设备内置。</string>
+    <string name="flash_speed_label">间隔：%1$d 毫秒</string>
+    <string name="flash_strobe">频闪</string>
+    <string name="flash_breathe">呼吸</string>
+    <string name="flash_random">随机</string>
+    <string name="flash_rainbow">彩虹</string>
+    <string name="flash_stop">停止闪烁</string>
 
     <!-- Music reactive -->
     <string name="music_title">音乐律动</string>

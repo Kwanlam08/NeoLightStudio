@@ -19,14 +19,14 @@
     <string name="status_updated">Light updated</string>
     <string name="status_write_failed">Write failed: %1$d</string>
     <string name="status_syncing">Syncing color and brightness…</string>
-    <string name="status_gradient_stopped">Gradient stopped</string>
-    <string name="status_gradient_playing">Playing gradient rainbow</string>
     <string name="status_rainbow_playing">Playing exit rainbow…</string>
     <string name="status_mic_failed">Cannot start microphone</string>
     <string name="status_music_on">Music reactive on</string>
     <string name="status_music_off">Music reactive off</string>
     <string name="status_no_channel">No available control channel</string>
     <string name="status_write_error">Cannot start write</string>
+    <string name="status_flash_on">Flash effect on</string>
+    <string name="status_flash_off">Flash effect off</string>
 
     <!-- Device -->
     <string name="unnamed_device">Unnamed BLE device</string>
@@ -40,16 +40,21 @@
 
     <!-- Exit rainbow -->
     <string name="exit_rainbow_title">Exit Rainbow</string>
-    <string name="exit_rainbow_desc">Authentic built-in bottom-ring flashing effect. Speed stays at device default.</string>
+    <string name="exit_rainbow_desc_fixed">Authentic built-in bottom-ring flashing effect. Speed is fixed by the device firmware and cannot be adjusted from the app.</string>
     <string name="exit_rainbow_button">✨ Play Exit Rainbow</string>
 
     <!-- Create screen -->
     <string name="please_connect_first">Please connect a light stick on the Home tab first.</string>
-    <string name="gradient_title">Full-Ring Gradient</string>
-    <string name="gradient_desc">Slower on the right, faster on the left. This is an independent gradient effect, not the exit rainbow.</string>
-    <string name="cycle_seconds">Approx. %1$d sec per loop</string>
-    <string name="stop_gradient">Stop Gradient</string>
-    <string name="play_gradient">Play Gradient</string>
+
+    <!-- Flash effects -->
+    <string name="flash_title">Flash Effects</string>
+    <string name="flash_desc">Choose a flash mode and adjust the speed. These effects are controlled by the app, not the device.</string>
+    <string name="flash_speed_label">Interval: %1$d ms</string>
+    <string name="flash_strobe">Strobe</string>
+    <string name="flash_breathe">Breathe</string>
+    <string name="flash_random">Random</string>
+    <string name="flash_rainbow">Rainbow</string>
+    <string name="flash_stop">Stop Flash</string>
 
     <!-- Music reactive -->
     <string name="music_title">Music Reactive</string>

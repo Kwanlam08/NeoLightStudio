@@ -19,14 +19,14 @@
     <string name="status_updated">라이트가 업데이트되었습니다</string>
     <string name="status_write_failed">쓰기 실패: %1$d</string>
     <string name="status_syncing">색상 및 밝기 동기화 중…</string>
-    <string name="status_gradient_stopped">그라데이션 중지됨</string>
-    <string name="status_gradient_playing">그라데이션 레인보우 재생 중</string>
     <string name="status_rainbow_playing">퇴장 레인보우 재생 중…</string>
     <string name="status_mic_failed">마이크를 시작할 수 없습니다</string>
     <string name="status_music_on">음악 반응 켜짐</string>
     <string name="status_music_off">음악 반응 꺼짐</string>
     <string name="status_no_channel">사용 가능한 제어 채널이 없습니다</string>
     <string name="status_write_error">쓰기를 시작할 수 없습니다</string>
+    <string name="status_flash_on">깜빡임 효과 켜짐</string>
+    <string name="status_flash_off">깜빡임 효과 꺼짐</string>
 
     <!-- Device -->
     <string name="unnamed_device">이름 없는 BLE 기기</string>
@@ -40,16 +40,21 @@
 
     <!-- Exit rainbow -->
     <string name="exit_rainbow_title">퇴장 레인보우</string>
-    <string name="exit_rainbow_desc">라이트스틱 내장의 리얼한 하단 링 점멸 효과입니다. 속도는 기기 기본 설정을 유지합니다.</string>
+    <string name="exit_rainbow_desc_fixed">라이트스틱 내장의 리얼한 하단 링 점멸 효과입니다. 속도는 기기 펌웨어에서 결정되며, 앱에서 조절할 수 없습니다.</string>
     <string name="exit_rainbow_button">✨ 퇴장 레인보우 재생</string>
 
     <!-- Create screen -->
     <string name="please_connect_first">먼저 홈 탭에서 라이트스틱을 연결하세요.</string>
-    <string name="gradient_title">전체 링 그라데이션</string>
-    <string name="gradient_desc">왼쪽이 빠르고, 오른쪽이 느립니다. 이것은 독립적인 그라데이션 효과이며, 퇴장 레인보우가 아닙니다.</string>
-    <string name="cycle_seconds">한 바퀴 약 %1$d초</string>
-    <string name="stop_gradient">그라데이션 중지</string>
-    <string name="play_gradient">그라데이션 재생</string>
+
+    <!-- Flash effects -->
+    <string name="flash_title">깜빡임 효과</string>
+    <string name="flash_desc">깜빡임 모드를 선택하고 속도를 조절합니다. 이 효과들은 앱에서 제어하며, 기기 내장이 아닙니다.</string>
+    <string name="flash_speed_label">간격: %1$d ms</string>
+    <string name="flash_strobe">스트로브</string>
+    <string name="flash_breathe">브리즈</string>
+    <string name="flash_random">랜덤</string>
+    <string name="flash_rainbow">레인보우</string>
+    <string name="flash_stop">깜빡임 중지</string>
 
     <!-- Music reactive -->
     <string name="music_title">음악 반응</string>

@@ -48,6 +48,7 @@ import com.kyant.backdrop.effects.blur as backdropBlur
 import com.kyant.backdrop.effects.vibrancy
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.shadow.Shadow
+import kotlin.random.Random
 
 private val LocalLightStickBackdrop = compositionLocalOf<LayerBackdrop?> { null }
 
@@ -57,6 +58,7 @@ private const val RAINBOW_UUID = "8ec91003-f315-4f60-9fb8-838830daea50"
 
 enum class ThemeMode { FOLLOW_SYSTEM, LIGHT, DARK }
 enum class Screen { HOME, CREATE, SETTINGS }
+enum class FlashMode { NONE, STROBE, BREATHE, RANDOM_COLOR, RAINBOW_GRADIENT }
 
 data class Device(val name: String, val address: String, val rssi: Int)
 data class UiState(
@@ -67,8 +69,8 @@ data class UiState(
     val rainbowReady: Boolean = false,
     val hue: Float = 170f,
     val brightness: Float = 1f,
-    val rainbowCycleSeconds: Int = 180,
-    val rainbowPlaying: Boolean = false,
+    val flashMode: FlashMode = FlashMode.NONE,
+    val flashSpeed: Int = 500,
     val musicReactive: Boolean = false,
     val themeMode: ThemeMode = ThemeMode.FOLLOW_SYSTEM
 )
@@ -78,7 +80,7 @@ class LightStickViewModel(app: Application) : AndroidViewModel(app) {
     private val adapter get() = getApplication<Application>().getSystemService(BluetoothManager::class.java).adapter
     private var scanner: BluetoothLeScanner? = null
     private var gatt: BluetoothGatt? = null
-    private var rainbowJob: Job? = null
+    private var flashJob: Job? = null
     private var musicJob: Job? = null
     private var audioRecord: android.media.AudioRecord? = null
     private val found = linkedMapOf<String, Device>()
@@ -126,45 +128,116 @@ class LightStickViewModel(app: Application) : AndroidViewModel(app) {
     }
     fun setColor(hue: Float = _state.value.hue, brightness: Float = _state.value.brightness) {
         val h = hue.coerceIn(0f, 360f); val b = brightness.coerceIn(0.05f, 1f); _state.update { it.copy(hue = h, brightness = b) }
-        val rgb = android.graphics.Color.HSVToColor(floatArrayOf(h, 1f, 1f)); val packet = ByteArray(20).also { p -> p[0] = 1; p[1] = 15; p[3] = (((rgb shr 16) and 255) * b).toInt().toByte(); p[4] = (((rgb shr 8) and 255) * b).toInt().toByte(); p[5] = ((rgb and 255) * b).toInt().toByte() }
-        write(COLOR_UUID, packet, s(R.string.status_syncing))
+        sendColorFrame(h, b)
     }
-    fun setRainbowCycleSeconds(value: Float) { _state.update { it.copy(rainbowCycleSeconds = value.toInt().coerceIn(60, 600)) } }
-    fun toggleSlowRainbow() {
-        if (rainbowJob != null) { rainbowJob?.cancel(); rainbowJob = null; _state.update { it.copy(rainbowPlaying = false, status = s(R.string.status_gradient_stopped)) }; return }
-        if (!_state.value.colorReady) return
-        rainbowJob = viewModelScope.launch {
-            _state.update { it.copy(rainbowPlaying = true, status = s(R.string.status_gradient_playing)) }
+    private fun sendColorFrame(hue: Float, brightness: Float) {
+        val rgb = android.graphics.Color.HSVToColor(floatArrayOf(hue % 360f, 1f, 1f))
+        val packet = ByteArray(20).also { p ->
+            p[0] = 1; p[1] = 15
+            p[3] = (((rgb shr 16) and 255) * brightness).toInt().toByte()
+            p[4] = (((rgb shr 8) and 255) * brightness).toInt().toByte()
+            p[5] = ((rgb and 255) * brightness).toInt().toByte()
+        }
+        write(COLOR_UUID, packet, "")
+    }
+
+    fun setFlashSpeed(value: Float) { _state.update { it.copy(flashSpeed = value.toInt().coerceIn(100, 2000)) } }
+
+    fun setFlashMode(mode: FlashMode) {
+        if (_state.value.flashMode == mode) {
+            stopFlash()
+            return
+        }
+        stopFlash()
+        if (mode == FlashMode.NONE || !_state.value.colorReady) return
+        _state.update { it.copy(flashMode = mode, status = s(R.string.status_flash_on)) }
+        flashJob = viewModelScope.launch {
             var step = 0
-            while (isActive) { sendRainbowFrame(step * 3f, _state.value.brightness); step = (step + 1) % 120; delay((_state.value.rainbowCycleSeconds * 1000L) / 120L) }
+            while (isActive) {
+                val delayMs = _state.value.flashSpeed.toLong()
+                when (mode) {
+                    FlashMode.STROBE -> {
+                        sendColorFrame(_state.value.hue, if (step % 2 == 0) 1f else 0.05f)
+                        delay(delayMs)
+                    }
+                    FlashMode.BREATHE -> {
+                        val brightness = if (step % 2 == 0) {
+                            val t = (step % 20) / 20f
+                            0.05f + t * 0.95f
+                        } else 1f
+                        sendColorFrame(_state.value.hue, brightness)
+                        delay(delayMs / 20)
+                    }
+                    FlashMode.RANDOM_COLOR -> {
+                        val randomHue = Random.nextInt(0, 360).toFloat()
+                        sendColorFrame(randomHue, _state.value.brightness)
+                        delay(delayMs)
+                    }
+                    FlashMode.RAINBOW_GRADIENT -> {
+                        val hue = (step * 3f) % 360f
+                        sendColorFrame(hue, _state.value.brightness)
+                        delay(delayMs / 3)
+                    }
+                    FlashMode.NONE -> {}
+                }
+                step++
+            }
         }
     }
+
+    private fun stopFlash() {
+        flashJob?.cancel()
+        flashJob = null
+        _state.update { it.copy(flashMode = FlashMode.NONE, status = s(R.string.status_flash_off)) }
+    }
+
     fun playExitRainbow() {
         val packet = ByteArray(20).also { it[0] = 1; it[1] = 15; it[3] = 7; it[4] = 13 }
         write(RAINBOW_UUID, packet, s(R.string.status_rainbow_playing))
     }
+
     fun toggleMusicReactive() {
         if (musicJob != null) { stopMusicReactive(); return }
-        val rate = 44100; val minimum = android.media.AudioRecord.getMinBufferSize(rate, android.media.AudioFormat.CHANNEL_IN_MONO, android.media.AudioFormat.ENCODING_PCM_16BIT).coerceAtLeast(2048)
+        val rate = 44100
+        val minimum = android.media.AudioRecord.getMinBufferSize(rate, android.media.AudioFormat.CHANNEL_IN_MONO, android.media.AudioFormat.ENCODING_PCM_16BIT).coerceAtLeast(2048)
         val record = android.media.AudioRecord(android.media.MediaRecorder.AudioSource.MIC, rate, android.media.AudioFormat.CHANNEL_IN_MONO, android.media.AudioFormat.ENCODING_PCM_16BIT, minimum)
         if (record.state != android.media.AudioRecord.STATE_INITIALIZED) { _state.update { it.copy(status = s(R.string.status_mic_failed)) }; return }
         audioRecord = record; record.startRecording()
         musicJob = viewModelScope.launch(Dispatchers.Default) {
             val samples = ShortArray(1024); _state.update { it.copy(musicReactive = true, status = s(R.string.status_music_on)) }
-            while (isActive) { val n = record.read(samples, 0, samples.size); if (n > 0) { var energy = 0.0; for (i in 0 until n) energy += samples[i].toDouble() * samples[i]; val level = (kotlin.math.sqrt(energy / n) / 8000.0).coerceIn(0.0, 1.0).toFloat(); sendRainbowFrame(_state.value.hue, 0.12f + level * 0.88f) }; delay(140) }
+            while (isActive) {
+                val n = record.read(samples, 0, samples.size)
+                if (n > 0) {
+                    var energy = 0.0
+                    for (i in 0 until n) energy += samples[i].toDouble() * samples[i]
+                    val level = (kotlin.math.sqrt(energy / n) / 8000.0).coerceIn(0.0, 1.0).toFloat()
+                    sendColorFrame(_state.value.hue, 0.12f + level * 0.88f)
+                }
+                delay(140)
+            }
         }
     }
-    private fun stopMusicReactive() { musicJob?.cancel(); musicJob = null; audioRecord?.stop(); audioRecord?.release(); audioRecord = null; _state.update { it.copy(musicReactive = false, status = s(R.string.status_music_off)) } }
-    private fun sendRainbowFrame(hue: Float, brightness: Float) {
-        val rgb = android.graphics.Color.HSVToColor(floatArrayOf(hue % 360f, 1f, 1f)); val packet = ByteArray(20).also { p -> p[0] = 1; p[1] = 15; p[3] = (((rgb shr 16) and 255) * brightness).toInt().toByte(); p[4] = (((rgb shr 8) and 255) * brightness).toInt().toByte(); p[5] = ((rgb and 255) * brightness).toInt().toByte() }; write(COLOR_UUID, packet, "")
+
+    private fun stopMusicReactive() {
+        musicJob?.cancel(); musicJob = null
+        audioRecord?.stop(); audioRecord?.release(); audioRecord = null
+        _state.update { it.copy(musicReactive = false, status = s(R.string.status_music_off)) }
     }
+
     @SuppressLint("MissingPermission") private fun write(uuid: String, packet: ByteArray, pending: String) {
         val connection = gatt; val characteristic = connection?.getService(UUID.fromString(SERVICE_UUID))?.getCharacteristic(UUID.fromString(uuid))
-        if (connection == null || characteristic == null) { _state.update { it.copy(status = s(R.string.status_no_channel)) }; return }; if (pending.isNotEmpty()) _state.update { it.copy(status = pending) }
-        if (Build.VERSION.SDK_INT >= 33) { if (connection.writeCharacteristic(characteristic, packet, BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT) != BluetoothStatusCodes.SUCCESS) _state.update { it.copy(status = s(R.string.status_write_error)) } }
-        else { characteristic.value = packet; characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT; if (!connection.writeCharacteristic(characteristic)) _state.update { it.copy(status = s(R.string.status_write_error)) } }
+        if (connection == null || characteristic == null) { _state.update { it.copy(status = s(R.string.status_no_channel)) }; return }
+        if (pending.isNotEmpty()) _state.update { it.copy(status = pending) }
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (connection.writeCharacteristic(characteristic, packet, BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT) != BluetoothStatusCodes.SUCCESS)
+                _state.update { it.copy(status = s(R.string.status_write_error)) }
+        } else {
+            characteristic.value = packet; characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+            if (!connection.writeCharacteristic(characteristic)) _state.update { it.copy(status = s(R.string.status_write_error)) }
+        }
     }
-    override fun onCleared() { rainbowJob?.cancel(); stopMusicReactive(); gatt?.close() }
+
+    override fun onCleared() { flashJob?.cancel(); stopMusicReactive(); gatt?.close() }
 }
 
 class MainActivity : ComponentActivity() {
@@ -278,7 +351,7 @@ private fun Color.luminance(): Float = 0.299f * red + 0.587f * green + 0.114f * 
             item {
                 GlassCard {
                     Text(stringResource(R.string.exit_rainbow_title), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                    Text(stringResource(R.string.exit_rainbow_desc), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.70f))
+                    Text(stringResource(R.string.exit_rainbow_desc_fixed), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.70f))
                     Spacer(Modifier.height(8.dp))
                     Button(onClick = model::playExitRainbow, enabled = state.rainbowReady, modifier = Modifier.fillMaxWidth().height(64.dp), shape = RoundedCornerShape(20.dp)) {
                         Text(stringResource(R.string.exit_rainbow_button), style = MaterialTheme.typography.titleMedium)
@@ -297,13 +370,34 @@ private fun Color.luminance(): Float = 0.299f * red + 0.587f * green + 0.114f * 
         } else {
             item {
                 GlassCard {
-                    Text(stringResource(R.string.gradient_title), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                    Text(stringResource(R.string.gradient_desc), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.70f))
-                    Spacer(Modifier.height(4.dp))
-                    Text(stringResource(R.string.cycle_seconds, state.rainbowCycleSeconds), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium)
-                    Slider(value = state.rainbowCycleSeconds.toFloat(), onValueChange = model::setRainbowCycleSeconds, valueRange = 60f..600f, steps = 53, enabled = state.colorReady)
-                    Button(onClick = model::toggleSlowRainbow, enabled = state.colorReady, modifier = Modifier.fillMaxWidth()) {
-                        Text(stringResource(if (state.rainbowPlaying) R.string.stop_gradient else R.string.play_gradient))
+                    Text(stringResource(R.string.flash_title), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.flash_desc), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.70f))
+                    Spacer(Modifier.height(8.dp))
+                    Text(stringResource(R.string.flash_speed_label, state.flashSpeed), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium)
+                    Slider(value = state.flashSpeed.toFloat(), onValueChange = model::setFlashSpeed, valueRange = 100f..2000f, steps = 18, enabled = state.colorReady)
+                    Spacer(Modifier.height(8.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                        FlashMode.entries.filter { it != FlashMode.NONE }.forEach { mode ->
+                            val label = when (mode) {
+                                FlashMode.STROBE -> stringResource(R.string.flash_strobe)
+                                FlashMode.BREATHE -> stringResource(R.string.flash_breathe)
+                                FlashMode.RANDOM_COLOR -> stringResource(R.string.flash_random)
+                                FlashMode.RAINBOW_GRADIENT -> stringResource(R.string.flash_rainbow)
+                                FlashMode.NONE -> ""
+                            }
+                            val selected = state.flashMode == mode
+                            Button(
+                                onClick = { model.setFlashMode(mode) },
+                                modifier = Modifier.weight(1f),
+                                colors = if (selected) ButtonDefaults.buttonColors() else ButtonDefaults.outlinedButtonColors()
+                            ) { Text(label) }
+                        }
+                    }
+                    if (state.flashMode != FlashMode.NONE) {
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedButton(onClick = { model.setFlashMode(FlashMode.NONE) }, modifier = Modifier.fillMaxWidth()) {
+                            Text(stringResource(R.string.flash_stop))
+                        }
                     }
                 }
             }
@@ -322,9 +416,9 @@ private fun Color.luminance(): Float = 0.299f * red + 0.587f * green + 0.114f * 
                     Text(stringResource(R.string.color_brightness_title), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(4.dp))
                     Text(stringResource(R.string.brightness_label, (state.brightness * 100).toInt()), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.72f))
-                    Slider(value = state.brightness, onValueChange = { model.setColor(brightness = it) }, valueRange = .05f..1f, enabled = state.colorReady)
+                    Slider(value = state.brightness, onValueChange = { model.setColor(brightness = it) }, valueRange = .05f..1f, enabled = state.colorReady && state.flashMode == FlashMode.NONE)
                     Text(stringResource(R.string.hue_label), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.72f))
-                    Slider(value = state.hue, onValueChange = { model.setColor(hue = it) }, valueRange = 0f..360f, enabled = state.colorReady)
+                    Slider(value = state.hue, onValueChange = { model.setColor(hue = it) }, valueRange = 0f..360f, enabled = state.colorReady && state.flashMode == FlashMode.NONE)
                     Spacer(Modifier.height(4.dp))
                     val colorPresets = listOf(
                         stringResource(R.string.color_red) to 0f,
@@ -333,7 +427,7 @@ private fun Color.luminance(): Float = 0.299f * red + 0.587f * green + 0.114f * 
                         stringResource(R.string.color_purple) to 280f
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                        colorPresets.forEach { (name, hue) -> OutlinedButton(onClick = { model.setColor(hue = hue) }, enabled = state.colorReady, modifier = Modifier.weight(1f)) { Text(name) } }
+                        colorPresets.forEach { (name, hue) -> OutlinedButton(onClick = { model.setColor(hue = hue) }, enabled = state.colorReady && state.flashMode == FlashMode.NONE, modifier = Modifier.weight(1f)) { Text(name) } }
                     }
                 }
             }

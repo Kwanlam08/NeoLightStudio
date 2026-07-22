@@ -19,14 +19,14 @@
     <string name="status_updated">Luz actualizada</string>
     <string name="status_write_failed">Escritura fallida: %1$d</string>
     <string name="status_syncing">Sincronizando color y brillo…</string>
-    <string name="status_gradient_stopped">Gradiente detenido</string>
-    <string name="status_gradient_playing">Reproduciendo gradiente arcoíris</string>
     <string name="status_rainbow_playing">Reproduciendo arcoíris de salida…</string>
     <string name="status_mic_failed">No se puede iniciar el micrófono</string>
     <string name="status_music_on">Reactivación musical activada</string>
     <string name="status_music_off">Reactivación musical desactivada</string>
     <string name="status_no_channel">No hay canal de control disponible</string>
     <string name="status_write_error">No se puede iniciar la escritura</string>
+    <string name="status_flash_on">Efecto de destello activado</string>
+    <string name="status_flash_off">Efecto de destello desactivado</string>
 
     <!-- Device -->
     <string name="unnamed_device">Dispositivo BLE sin nombre</string>
@@ -40,16 +40,21 @@
 
     <!-- Exit rainbow -->
     <string name="exit_rainbow_title">Arcoíris de Salida</string>
-    <string name="exit_rainbow_desc">Efecto auténtico de destello del anillo inferior integrado. La velocidad se mantiene en el valor predeterminado del dispositivo.</string>
+    <string name="exit_rainbow_desc_fixed">Efecto auténtico de destello del anillo inferior integrado. La velocidad está fijada por el firmware del dispositivo y no se puede ajustar desde la app.</string>
     <string name="exit_rainbow_button">✨ Reproducir Arcoíris de Salida</string>
 
     <!-- Create screen -->
     <string name="please_connect_first">Conecta un light stick en la pestaña Inicio primero.</string>
-    <string name="gradient_title">Gradiente de Anillo Completo</string>
-    <string name="gradient_desc">Más lento a la derecha, más rápido a la izquierda. Es un efecto de gradiente independiente, no el arcoíris de salida.</string>
-    <string name="cycle_seconds">Aprox. %1$d seg por ciclo</string>
-    <string name="stop_gradient">Detener Gradiente</string>
-    <string name="play_gradient">Reproducir Gradiente</string>
+
+    <!-- Flash effects -->
+    <string name="flash_title">Efectos de Destello</string>
+    <string name="flash_desc">Elige un modo de destello y ajusta la velocidad. Estos efectos son controlados por la app, no por el dispositivo.</string>
+    <string name="flash_speed_label">Intervalo: %1$d ms</string>
+    <string name="flash_strobe">Estrobo</string>
+    <string name="flash_breathe">Respirar</string>
+    <string name="flash_random">Aleatorio</string>
+    <string name="flash_rainbow">Arcoíris</string>
+    <string name="flash_stop">Detener Destello</string>
 
     <!-- Music reactive -->
     <string name="music_title">Reactivación Musical</string>
